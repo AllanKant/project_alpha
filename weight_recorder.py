@@ -17,7 +17,6 @@ entryfield.pack()
 button = tk.Button(root, text= "Save")
 button.pack()
 
-# table = tk.ttk.Treeview(root, columns=("Column1", "Column2", "Column3"))
 
 
 def on_button_click():
@@ -34,6 +33,24 @@ def on_button_click():
         else:
             label.config(text="Try Again - between 50 and 90 please)")
 
+#Read the history from the file into a list where each element contains a separate date and weight sub-element
+with open(datafile, "r") as file:
+    rawhistory = file.readlines()
+
+history = []
+for x in rawhistory:
+    if x != '\n':
+        weightentry = x.split(",")
+        weightentry[1] = float(weightentry[1])
+        history.append(weightentry)
+print(history)
+
+# test = ['hello allan']
+# print(test)
+# for x in test:
+#     x.split(",")
+#     print(x)
+# print(test)
 
 button.config(command= on_button_click)
 
