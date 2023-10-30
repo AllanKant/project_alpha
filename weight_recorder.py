@@ -1,11 +1,12 @@
 import datetime
 import tkinter as tk
+from tkinter import ttk
 
 datafile = "/Users/allankant/Documents/Code/project_alpha/weight_data.txt"
 
 root = tk.Tk()
 root.title("Weight Recorder")
-root.geometry("300x100")
+root.geometry("600x100")
 
 label = tk.Label(root, text= "Enter weight here: ")
 label.pack()
@@ -17,7 +18,11 @@ entryfield.pack()
 button = tk.Button(root, text= "Save")
 button.pack()
 
-
+# Date and Weight Table
+table = ttk.Treeview(root, columns=("#","Date", "Weight"))
+table.heading("#0", text="#")
+table.heading("#1", text="Date")
+table.heading("#2", text="Weight")
 
 def on_button_click():
     try:
@@ -30,6 +35,7 @@ def on_button_click():
             button.config(text= "Saved")
             with open(datafile, "a") as file:
                 file.write(f"\n{datetime.date.today()},{float(weight)}")
+            table.pack()
         else:
             label.config(text="Try Again - between 50 and 90 please)")
 
@@ -45,12 +51,10 @@ for x in rawhistory:
         history.append(weightentry)
 print(history)
 
-# test = ['hello allan']
-# print(test)
-# for x in test:
-#     x.split(",")
-#     print(x)
-# print(test)
+rownum = 1
+for x in history:
+    table.insert("", "end", values = (f"{rownum}", x[0], x[1]))
+    rownum += 1
 
 button.config(command= on_button_click)
 
